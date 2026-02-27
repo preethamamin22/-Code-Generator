@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium QR Code Generator | static Gen</title>
+    <meta name="description" content="Generate high-quality static QR codes with custom logos and modern aesthetics.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- QR Code Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Form Section -->
+        <div class="form-section">
+            <h1>QR Generator Pro</h1>
+            <p>Create professional QR codes in seconds.</p>
+            
+            <form id="qr-form">
+                <div class="input-grid">
+                    <div class="input-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" placeholder="Vishal ..." required>
+                    </div>
+                    <div class="input-group">
+                        <label for="student_id">Student ID</label>
+                        <input type="text" id="student_id" placeholder="ID-12345" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" placeholder="10 Digit Number" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" placeholder="name@example.com" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="location">Location</label>
+                        <input type="text" id="location" placeholder="City, Country">
+                    </div>
+                    <div class="input-group">
+                        <label for="branch">Branch / Dept</label>
+                        <input type="text" id="branch" placeholder="Computer Science">
+                    </div>
+                    <div class="input-group full">
+                        <label for="message">Custom Message / URL</label>
+                        <textarea id="message" placeholder="Add a personal note or website link..."></textarea>
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                    <button type="submit" class="btn-generate">
+                        <i data-lucide="qr-code"></i> Generate QR
+                    </button>
+                    <button type="button" id="btn-save" class="btn-save" disabled>
+                        <i data-lucide="download"></i> Save Image
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Preview Section -->
+        <div class="preview-section" id="preview-area">
+            <div id="qr-canvas-container">
+                <div id="qrcode"></div>
+                <!-- Logo will be drawn on top using JS -->
+            </div>
+            
+            <div class="empty-state" id="empty-state">
+                <i data-lucide="image"></i>
+                <p>Preview will appear here</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+    </script>
+</body>
+</html>
