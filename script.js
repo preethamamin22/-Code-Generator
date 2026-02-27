@@ -3,10 +3,38 @@ const qrContainer = document.getElementById('qrcode');
 const canvasContainer = document.getElementById('qr-canvas-container');
 const emptyState = document.getElementById('empty-state');
 const btnSave = document.getElementById('btn-save');
+const themeToggle = document.getElementById('theme-toggle');
+const modeToggle = document.getElementById('mode-toggle');
+const normalView = document.getElementById('qr-normal-view');
+const badgeView = document.getElementById('id-badge-view');
+const badgeQrContainer = document.getElementById('badge-qr-container');
 
 let finalCanvas = null;
+let isBadgeMode = false;
 
-qrForm.addEventListener('submit', function(e) {
+themeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('light-theme');
+    const icon = themeToggle.querySelector('i');
+    if (document.body.classList.contains('light-theme')) {
+        icon.setAttribute('data-lucide', 'sun');
+    } else {
+        icon.setAttribute('data-lucide', 'moon');
+    }
+    lucide.createIcons();
+});
+
+modeToggle.addEventListener('click', () => {
+    isBadgeMode = !isBadgeMode;
+    normalView.classList.toggle('hidden', isBadgeMode);
+    badgeView.classList.toggle('hidden', !isBadgeMode);
+
+    const icon = modeToggle.querySelector('i');
+    icon.setAttribute('data-lucide', isBadgeMode ? 'qr-code' : 'credit-card');
+    modeToggle.innerHTML = `<i data-lucide="${isBadgeMode ? 'qr-code' : 'credit-card'}"></i> ${isBadgeMode ? 'QR Mode' : 'Badge Mode'}`;
+    lucide.createIcons();
+});
+
+qrForm.addEventListener('submit', function (e) {
     e.preventDefault();
 
     // 1. Gather Data
@@ -25,7 +53,7 @@ qrForm.addEventListener('submit', function(e) {
 
     // 2. Clear previous
     qrContainer.innerHTML = '';
-    
+
     // 3. Generate QR
     const qrcode = new QRCode(qrContainer, {
         text: qrData,
@@ -40,10 +68,10 @@ qrForm.addEventListener('submit', function(e) {
     setTimeout(() => {
         const qrImage = qrContainer.querySelector('img');
         const qrCanvas = qrContainer.querySelector('canvas');
-        
+
         // Use canvas if available, otherwise image
         const source = qrCanvas || qrImage;
-        
+
         createFinalImage(source);
     }, 100);
 });
@@ -64,18 +92,18 @@ function createFinalImage(qrSource) {
     // Load and Draw Logo (vishal.png -> logo.png)
     const logo = new Image();
     logo.src = 'logo.png';
-    
+
     logo.onload = () => {
         const logoSize = 60;
         const x = (canvas.width - logoSize) / 2;
         const y = (canvas.height - logoSize) / 2;
-        
+
         // Draw white border for logo
         ctx.fillStyle = "white";
         ctx.fillRect(x - 2, y - 2, logoSize + 4, logoSize + 4);
-        
+
         ctx.drawImage(logo, x, y, logoSize, logoSize);
-        
+
         finalizePreview(canvas);
     };
 
@@ -87,22 +115,34 @@ function createFinalImage(qrSource) {
 
 function finalizePreview(canvas) {
     finalCanvas = canvas;
-    
+
     // Show UI
     canvasContainer.classList.add('visible');
     emptyState.style.display = 'none';
     btnSave.disabled = false;
-    
+
     // Add to container (replace previous)
     qrContainer.innerHTML = '';
     qrContainer.appendChild(canvas);
+
+    // Update Badge View
+    document.getElementById('badge-name').textContent = document.getElementById('name').value || "NAME HERE";
+    document.getElementById('badge-id').textContent = `ID: ${document.getElementById('student_id').value || "000000"}`;
+    document.getElementById('badge-branch').textContent = `BRANCH: ${document.getElementById('branch').value || "---"}`;
+
+    badgeQrContainer.innerHTML = '';
+    const badgeCanvas = document.createElement('canvas');
+    badgeCanvas.width = canvas.width;
+    badgeCanvas.height = canvas.height;
+    badgeCanvas.getContext('2d').drawImage(canvas, 0, 0);
+    badgeQrContainer.appendChild(badgeCanvas);
 }
 
 btnSave.addEventListener('click', () => {
     if (!finalCanvas) return;
-    
+
     const link = document.createElement('a');
-    link.download = 'QR_Code_Vishal.png';
+    link.download = 'QR_Code_Preetham.png';
     link.href = finalCanvas.toDataURL('image/png');
     link.click();
 });

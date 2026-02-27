@@ -1,0 +1,17 @@
+{
+  "name": "qr-code-pro-web",
+  "version": "1.0.0",
+  "description": "Premium QR Code Generator Web App",
+  "main": "index.html",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "keywords": [],
+  "author": "Vishal",
+  "license": "ISC",
+  "devDependencies": {
+    "vite": "^5.0.0"
+  }
+}

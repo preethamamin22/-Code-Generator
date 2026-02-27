@@ -1,36 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Premium QR Code Generator | static Gen</title>
     <meta name="description" content="Generate high-quality static QR codes with custom logos and modern aesthetics.">
-    
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-    
+
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    
+
     <!-- QR Code Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-    
+
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div class="container">
         <!-- Form Section -->
         <div class="form-section">
-            <h1>QR Generator Pro</h1>
+            <h1>Preetham's QR Pro</h1>
             <p>Create professional QR codes in seconds.</p>
-            
+
             <form id="qr-form">
                 <div class="input-grid">
                     <div class="input-group">
                         <label for="name">Full Name</label>
-                        <input type="text" id="name" placeholder="Vishal ..." required>
+                        <input type="text" id="name" placeholder="Preetham ..." required>
                     </div>
                     <div class="input-group">
                         <label for="student_id">Student ID</label>
@@ -66,19 +68,48 @@
                         <i data-lucide="download"></i> Save Image
                     </button>
                 </div>
+
+                <div class="extra-features">
+                    <button type="button" id="theme-toggle" class="btn-icon">
+                        <i data-lucide="moon"></i> Toggle Theme
+                    </button>
+                    <button type="button" id="mode-toggle" class="btn-icon">
+                        <i data-lucide="credit-card"></i> ID Badge Mode
+                    </button>
+                </div>
             </form>
         </div>
 
         <!-- Preview Section -->
         <div class="preview-section" id="preview-area">
-            <div id="qr-canvas-container">
-                <div id="qrcode"></div>
-                <!-- Logo will be drawn on top using JS -->
+            <!-- Normal Mode -->
+            <div id="qr-normal-view">
+                <div id="qr-canvas-container">
+                    <div id="qrcode"></div>
+                </div>
+                <div class="empty-state" id="empty-state">
+                    <i data-lucide="image"></i>
+                    <p>Preview will appear here</p>
+                </div>
             </div>
-            
-            <div class="empty-state" id="empty-state">
-                <i data-lucide="image"></i>
-                <p>Preview will appear here</p>
+
+            <!-- ID Badge Mode (Hidden by default) -->
+            <div id="id-badge-view" class="hidden">
+                <div class="id-card">
+                    <div class="id-header">STUDENT IDENTIFICATION</div>
+                    <div class="id-body">
+                        <div class="id-photo-placeholder">
+                            <i data-lucide="user"></i>
+                        </div>
+                        <div class="id-info">
+                            <h2 id="badge-name">NAME HERE</h2>
+                            <p id="badge-id">ID: 000000</p>
+                            <p id="badge-branch">BRANCH: ---</p>
+                        </div>
+                        <div id="badge-qr-container"></div>
+                    </div>
+                    <div class="id-footer">Scan for Details</div>
+                </div>
             </div>
         </div>
     </div>
@@ -89,4 +120,5 @@
         lucide.createIcons();
     </script>
 </body>
+
 </html>
